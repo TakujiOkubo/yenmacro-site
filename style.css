@@ -9,7 +9,7 @@
 
 :root {
   --blue: #378ADD;       /* logo blue: large headings only (3.6:1 on white) */
-  --blue-text: #1D62B0;  /* links and buttons: passes 4.5:1 on white */
+  --blue-text: #1D62B0;  /* links: passes 4.5:1 on white */
   --red: #ED1C24;
   --rule: #BFBFBF;
   --ink: #222222;
@@ -62,18 +62,7 @@ h2 {
 
 section { padding: 2.25rem 0; }
 .intro { padding-top: 0.5rem; }
-.intro p { color: var(--ink-soft); margin: 0 0 1.25rem; }
-
-.button {
-  display: inline-block;
-  background: var(--blue-text);
-  color: #FFFFFF;
-  font-weight: 700;
-  text-decoration: none;
-  padding: 0.7rem 1.3rem;
-  border-radius: 4px;
-}
-.button:hover { background: #164E8C; }
+.intro p { color: var(--ink-soft); margin: 0 0 0.6rem; }
 
 .topics { list-style: none; margin: 0; padding: 0; }
 .topics li {
