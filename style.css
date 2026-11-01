@@ -64,6 +64,14 @@ section { padding: 2.25rem 0; }
 .intro { padding-top: 0.5rem; }
 .intro p { color: var(--ink-soft); margin: 0 0 0.6rem; }
 
+/* Our view: a pale band so the section reads as the firm's standing view. */
+.view { background: var(--bg-band); }
+.view .dateline { color: var(--ink-soft); font-size: 0.95rem; margin: -0.6rem 0 1rem; }
+.view .theme { margin-top: 1.5rem; }
+.view h3 { font-size: 1.15rem; font-weight: 700; margin: 0 0 0.35rem; }
+.view p { margin: 0 0 0.5rem; }
+.view .read { font-size: 0.95rem; color: var(--ink-soft); }
+
 .topics { list-style: none; margin: 0; padding: 0; }
 .topics li {
   padding: 0.85rem 0;
