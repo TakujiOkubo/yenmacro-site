@@ -21,6 +21,9 @@ LOGO_FILES = [
     ("favicon.ico", "../favicon.ico"),
     ("png/yenmacro-favicon-180w.png", "logo/apple-touch-icon.png"),
     ("png/yenmacro-horizontal-1200w.png", "logo/yenmacro-horizontal-1200w.png"),
+    # Email signature logo (Gmail fetches it from the public site).
+    ("png/yenmacro-horizontal-small-300w.png", "logo/yenmacro-horizontal-small-300w.png"),
+    ("png/yenmacro-horizontal-small-600w.png", "logo/yenmacro-horizontal-small-600w.png"),
 ]
 
 
