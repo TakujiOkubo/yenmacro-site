@@ -61,8 +61,7 @@ h2 {
 }
 
 section { padding: 2.25rem 0; }
-.intro { padding-top: 0.5rem; }
-.intro p { color: var(--ink-soft); margin: 0 0 0.6rem; }
+.intro { padding-top: 0.5rem; padding-bottom: 0; }
 
 /* Our view: a pale band so the section reads as the firm's standing view. */
 .view { background: var(--bg-band); }
@@ -80,12 +79,21 @@ section { padding: 2.25rem 0; }
 .topics li:last-child { border-bottom: 1px solid #E3E3E3; }
 .topics strong { display: block; font-weight: 700; }
 
-.about-body {
+/* Foreword: portrait beside the title and text; on a phone the text runs full width below. */
+.foreword { padding-top: 1.5rem; }
+.foreword-body {
   display: grid;
-  grid-template-columns: 11rem 1fr;
-  gap: 1.75rem;
+  grid-template-columns: 10rem 1fr;
+  grid-template-areas: "photo head" "photo text";
+  column-gap: 1.75rem;
   align-items: start;
 }
+.foreword .portrait { grid-area: photo; }
+.foreword h2 { grid-area: head; margin-bottom: 0.75rem; }
+.foreword-text { grid-area: text; }
+.foreword-text p { margin: 0 0 0.75rem; }
+.foreword .signoff { color: var(--ink-soft); font-size: 0.95rem; }
+.foreword .focus { color: var(--ink-soft); margin: 1.5rem 0 0; }
 .portrait { width: 100%; height: auto; border-radius: 4px; }
 .about p { margin: 0 0 0.9rem; }
 .about .name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0; }
@@ -109,6 +117,12 @@ section { padding: 2.25rem 0; }
   h1 { font-size: 1.4rem; }
   h2 { font-size: 1.35rem; }
   section { padding: 1.75rem 0; }
-  .about-body { grid-template-columns: 1fr; gap: 1.25rem; }
-  .portrait { width: 9.5rem; }
+  .foreword-body {
+    grid-template-columns: 6.5rem 1fr;
+    grid-template-areas: "photo head" "text text";
+    column-gap: 1.1rem;
+    align-items: center;
+  }
+  .foreword h2 { margin-bottom: 0; }
+  .foreword-text { margin-top: 1rem; }
 }
