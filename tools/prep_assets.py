@@ -24,6 +24,8 @@ LOGO_FILES = [
     # Email signature logo (Gmail fetches it from the public site).
     ("png/yenmacro-horizontal-small-300w.png", "logo/yenmacro-horizontal-small-300w.png"),
     ("png/yenmacro-horizontal-small-600w.png", "logo/yenmacro-horizontal-small-600w.png"),
+    ("png/yenmacro-signature-300w.png", "logo/yenmacro-signature-300w.png"),
+    ("png/yenmacro-signature-600w.png", "logo/yenmacro-signature-600w.png"),
 ]
 
 
