@@ -34,6 +34,18 @@ def copy_logos():
         shutil.copy2(BRAND / src, out)
 
 
+def build_workspace_logo():
+    # Google Workspace custom logo (Gmail header): at most 320x132 px; stacked layout fits best.
+    src = Image.open(BRAND / "png" / "yenmacro-stacked-1200w.png").convert("RGBA")
+    scale = min(304 / src.width, 116 / src.height)
+    logo = src.resize((round(src.width * scale), round(src.height * scale)), Image.LANCZOS)
+    canvas = Image.new("RGBA", (320, 132), (255, 255, 255, 0))
+    canvas.paste(logo, ((320 - logo.width) // 2, (132 - logo.height) // 2), logo)
+    # Palette PNG keeps it under Google's 30 KB logo limit.
+    canvas = canvas.quantize(colors=128, method=Image.Quantize.FASTOCTREE)
+    canvas.save(ASSETS / "logo" / "yenmacro-workspace-320x132.png", optimize=True)
+
+
 def build_font():
     # Latin-1 plus the punctuation the copy uses (dashes, quotes, middle dot, ellipsis).
     unicodes = list(range(0x20, 0x7F)) + list(range(0xA0, 0x100)) + [
@@ -61,6 +73,7 @@ def build_portrait():
 
 if __name__ == "__main__":
     copy_logos()
+    build_workspace_logo()
     build_font()
     build_portrait()
     for p in sorted(ASSETS.rglob("*")) + [ROOT / "favicon.ico"]:
