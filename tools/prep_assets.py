@@ -49,29 +49,39 @@ def build_workspace_logo():
 
 
 def build_social_card():
-    # Link-preview image (og:image) at LinkedIn/Facebook's 1.91:1 size, so shares show the
-    # whole logo instead of a crop of the very wide horizontal logo.
-    from PIL import ImageDraw, ImageFont
+    # Link-preview image (og:image) at the 1.91:1 size LinkedIn, Facebook and X expect.
+    # LinkedIn's post composer shows it as a ~130 px thumbnail, so it carries the logo alone,
+    # as large as fits, with the darker signature grey and the bolder small-size orb.
+    import sys
+    import tempfile
+    sys.path.insert(0, str(FONT_SRC.parent))
+    import build_logo as bl
+
+    pal = dict(bl.PALETTES[""], role=bl.SIGNATURE_GREY)
+    b1, lead = 22, 27
+    _, l1 = bl.text_path("Yen Macro", 600, bl.NAME_SIZE, 0, b1)
+    top = l1[1]
+    d = b1 + lead + 4.5 + 2.4 - top
+    x = d * 44 / 36
+    d1, l1 = bl.text_path("Yen Macro", 600, bl.NAME_SIZE, x, b1)
+    d2, l2 = bl.text_path("Research", 300, bl.NAME_SIZE, x, b1 + lead)
+    t = f'<path fill="{pal["name"]}" d="{d1}"/><path fill="{pal["role"]}" d="{d2}"/>'
+    r, rb = bl.rule(l1[0], max(l1[2], l2[2]), b1 + lead + 4.5, pal)
+    o, ob = bl.orb(0, top, d, pal, "orb", **bl.SMALL_ORB)
+    svg = bl.wrap(o + t + r, bl.union(ob, l1, l2, rb))
+
     W, H = 1200, 630
+    lw = 1040
+    lh = round(lw * bl._aspect(svg))
+    with tempfile.TemporaryDirectory() as td:
+        sp = Path(td) / "card-logo.svg"
+        sp.write_text(svg, encoding="utf-8")
+        pp = Path(td) / "card-logo.png"
+        bl.render_png(sp, pp, lw, lh)
+        logo = Image.open(pp).convert("RGBA")
     card = Image.new("RGB", (W, H), "#FFFFFF")
-    logo = Image.open(BRAND / "png" / "yenmacro-stacked-1200w.png").convert("RGBA")
-    lw = 720
-    logo = logo.resize((lw, round(logo.height * lw / logo.width)), Image.LANCZOS)
-    card.paste(logo, ((W - lw) // 2, 120), logo)
-    font = ImageFont.truetype(str(FONT_SRC / "Mulish-wght.ttf"), 38)
-    font.set_variation_by_axes([600])
-    d = ImageDraw.Draw(card)
-    lines = ["Independent research on the Japanese economy", "and its place in Asia and the world."]
-    y = 120 + logo.height + 70
-    for line in lines:
-        w = d.textlength(line, font=font)
-        d.text(((W - w) / 2, y), line, fill="#222222", font=font)
-        y += 54
-    # The logo's grey-and-red rule along the bottom edge.
-    red_from = round(W * 0.65)
-    d.rectangle([0, H - 10, red_from, H], fill="#BFBFBF")
-    d.rectangle([red_from, H - 10, W, H], fill="#ED1C24")
-    card.save(ASSETS / "img" / "yenmacro-social-1200x630.png", optimize=True)
+    card.paste(logo, ((W - lw) // 2, (H - lh) // 2), logo)
+    card.save(ASSETS / "img" / "yenmacro-social-v2-1200x630.png", optimize=True)
 
 
 def build_font():
