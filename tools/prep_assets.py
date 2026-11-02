@@ -48,6 +48,32 @@ def build_workspace_logo():
     canvas.save(ASSETS / "logo" / "yenmacro-workspace-320x132.png", optimize=True)
 
 
+def build_social_card():
+    # Link-preview image (og:image) at LinkedIn/Facebook's 1.91:1 size, so shares show the
+    # whole logo instead of a crop of the very wide horizontal logo.
+    from PIL import ImageDraw, ImageFont
+    W, H = 1200, 630
+    card = Image.new("RGB", (W, H), "#FFFFFF")
+    logo = Image.open(BRAND / "png" / "yenmacro-stacked-1200w.png").convert("RGBA")
+    lw = 720
+    logo = logo.resize((lw, round(logo.height * lw / logo.width)), Image.LANCZOS)
+    card.paste(logo, ((W - lw) // 2, 120), logo)
+    font = ImageFont.truetype(str(FONT_SRC / "Mulish-wght.ttf"), 38)
+    font.set_variation_by_axes([600])
+    d = ImageDraw.Draw(card)
+    lines = ["Independent research on the Japanese economy", "and its place in Asia and the world."]
+    y = 120 + logo.height + 70
+    for line in lines:
+        w = d.textlength(line, font=font)
+        d.text(((W - w) / 2, y), line, fill="#222222", font=font)
+        y += 54
+    # The logo's grey-and-red rule along the bottom edge.
+    red_from = round(W * 0.65)
+    d.rectangle([0, H - 10, red_from, H], fill="#BFBFBF")
+    d.rectangle([red_from, H - 10, W, H], fill="#ED1C24")
+    card.save(ASSETS / "img" / "yenmacro-social-1200x630.png", optimize=True)
+
+
 def build_font():
     # Latin-1 plus the punctuation the copy uses (dashes, quotes, middle dot, ellipsis).
     unicodes = list(range(0x20, 0x7F)) + list(range(0xA0, 0x100)) + [
@@ -76,6 +102,7 @@ def build_portrait():
 if __name__ == "__main__":
     copy_logos()
     build_workspace_logo()
+    build_social_card()
     build_font()
     build_portrait()
     for p in sorted(ASSETS.rglob("*")) + [ROOT / "favicon.ico"]:
