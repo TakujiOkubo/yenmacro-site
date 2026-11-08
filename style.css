@@ -72,6 +72,14 @@ section { padding: 2.25rem 0; }
 .view p { margin: 0 0 0.5rem; }
 .view .read { font-size: 0.95rem; color: var(--ink-soft); }
 
+/* Published articles: articles carried by outside publications. */
+.pubs { list-style: none; margin: 0; padding: 0; }
+.pubs li { padding: 0.85rem 0; border-top: 1px solid #E3E3E3; }
+.pubs li:last-child { border-bottom: 1px solid #E3E3E3; }
+.pubs p { margin: 0 0 0.25rem; }
+.pubs .venue { color: var(--ink-soft); font-size: 0.95rem; }
+.pubs .title { font-size: 1.15rem; font-weight: 700; }
+
 .topics { list-style: none; margin: 0; padding: 0; }
 .topics li {
   padding: 0.85rem 0;
